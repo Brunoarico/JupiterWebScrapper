@@ -1,4 +1,5 @@
 import json
+import hashlib
 
 #Classe que implemente um objeto que representa disciplinas
 class Disciplina:
@@ -46,6 +47,7 @@ class Unidade():
         self.code = code
         self.linkUnidade = linkUnidade
         self.discip = dict()
+        self.docentes = dict()
 
     #Retorna o nome de uma unidade
     def getNome(self):
@@ -69,6 +71,11 @@ class Unidade():
     def setDisciplina(self, code, name, linkDisciplina, ativ, desativ):
         self.discip[code] = Disciplina(name, code, linkDisciplina, ativ, desativ)
 
+    def setDocentes(self, name):
+        hash_object = hashlib.md5(name.encode()).hexdigest()
+        self.docentes[hash_object] = name
+        return hash_object
+
     #Adiciona parametros extras a uma determinada disciplina
     #   code: codigo da disciplina
     #   type: chave do parametro
@@ -89,4 +96,4 @@ class Unidade():
         tmp = dict()
         for key, value in self.discip.items():
             tmp[key] = value.toDict()
-        return {"nome": self.getNome(), "code": self.getCode(), "disciplinas": tmp}
+        return {"nome": self.getNome(), "code": self.getCode(), "disciplinas": tmp, "docentes": self.docentes}

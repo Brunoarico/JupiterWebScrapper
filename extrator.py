@@ -8,6 +8,7 @@ from unidade import Unidade
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+
 class Extractor:
 
     def __init__(self):
@@ -50,6 +51,8 @@ class Extractor:
             print("[-] Pagina de unidades com problemas, verificar se esta disponivel: " + base)
             return
 
+
+
     #Funcao que coleta mais informacoes sobre cada uma das disciplinas oferecidas pelas unidades
     #@param:
     #   codeDiscip: Disciplina a qual a pagina sera alvo da extração
@@ -76,12 +79,11 @@ class Extractor:
                     #trata a tabela de docentes
                     tr = tables[3].findAll("tr")
                     type = unidecode(tr[0].text.strip().lower().split("(")[0])
-                    docentes = ""
+                    docentes = []
                     names = tr[1].text.replace("\r", "").split("\n")
                     for i in names:
                         if(i.strip()):
-                            docentes += i.strip() + ","
-                    docentes = docentes[:-1]
+                            docentes.append(ref.setDocentes(i.strip()))
                     ref.setDisciplinaDetails(codeDiscip, type, docentes)
                     #trata a tabela programa resumido e programa
 
@@ -150,6 +152,7 @@ class Extractor:
                             link = a['href']
                             values.setDisciplina(code, name, link, ativ, desativ)
                             self.getDisciplinaInfo(code, values)
+                            self.toJson()
                 values.print()
             else:
                 print("[-] Pagina de " + values.getNome() + "com problemas")
