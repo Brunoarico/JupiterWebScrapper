@@ -1,5 +1,21 @@
 # Extrator de dados do jupiterweb
 
+
+## SQLite Mode
+
+O programa é constituido de dois arquivos:
+- O **dbmanager** que é onde reside a classe de gestao do banco de dados, onde estao implementadas as funçoes de criação de tabelas e de inserção de conteudo no bd.
+- O **extractor_db** que é onde reside a classe motor que executa o crawling sobre o jupiterweb e faz a busca pelas informaçoes de:
+  - Disciplinas oferecida por unidade
+  - Dados basicos sobre a disciplina (Os mesmos oferecidos no jsonMode)
+  - Dados sobre os requisitos das disciplinas
+
+Os dados estão organizados em um banco de dados SQLite versao 3 no formato representado no diagrama tipo MER:
+
+![BD](BD.png)
+
+## Json Mode
+
 O programa é composto de dois arquivos:
 - Um constando apenas de classes complementares que representam as **unidades** e as **disciplinas**
 - Outro que executa o processo de extração dos dados do jupiterweb
